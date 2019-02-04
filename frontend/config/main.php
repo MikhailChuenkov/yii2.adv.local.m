@@ -14,20 +14,20 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
-            'cookieValidationKey' => $params['cookieValidationKey'],
+            //'cookieValidationKey' => $params['cookieValidationKey'],
         ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity', 'httpOnly' => true, 'domain' => $params['cookieDomain']],
+            'identityCookie' => ['name' => '_identity', 'httpOnly' => true, 'domain' => '.task.local'],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced',
-            'cookieParams' =>[
+            /*'cookieParams' =>[
                 'httpOnly' => true,
-                'domain' => $params['cookieDomain'],
-                ]
+                //'domain' => $params['cookieDomain'],
+                ]*/
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -36,22 +36,6 @@ return [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
-            ],
-        ],
-        'view' => [
-            /*'theme' => [
-                'basePath' => '@app/Themes/23Feb',
-                'baseUrl' => '@web/Themes/23Feb',
-                'pathMap' => [
-                    '@app/views' => '@app/Themes/23Feb'
-                ]
-            ],*/
-            'theme' => [
-                'basePath' => '@app/Themes/AdminLTE-2.4.5',
-                'baseUrl' => '@web/Themes/AdminLTE-2.4.5',
-                'pathMap' => [
-                    '@app/views' => '@app/Themes/AdminLTE-2.4.5'
-                ]
             ],
         ],
         'errorHandler' => [
