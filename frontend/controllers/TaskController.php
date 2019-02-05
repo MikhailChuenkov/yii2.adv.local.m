@@ -44,9 +44,9 @@ class TaskController extends Controller
 
     public function actionTask($id)
     {
-        if(!\Yii::$app->user->can('TaskEdit')){
+        /*if(!\Yii::$app->user->can('TaskEdit')){
             throw new ForbiddenHttpException();
-        }
+        }*/
         return $this->render('one', [
             'model' => Tasks::findOne($id),
             'usersList' => Users::getUsersList(),

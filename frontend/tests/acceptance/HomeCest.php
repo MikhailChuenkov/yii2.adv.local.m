@@ -6,7 +6,7 @@ use yii\helpers\Url;
 
 class HomeCest
 {
-    public function checkHome(AcceptanceTester $I)
+    /*public function checkHome(AcceptanceTester $I)
     {
         $I->amOnPage(Url::toRoute('/site/index'));
         $I->see('My Application');
@@ -16,5 +16,15 @@ class HomeCest
         $I->wait(2); // wait for page to be opened
 
         $I->see('This is the About page.');
+        $I->click('Contact');
+        $I->wait(2); // wait for page to be opened
+        $I->click('Login');
+        $I->wait(2); // wait for page to be opened
+    }
+    */
+    public function checkOne(AcceptanceTester $I)
+    {
+        $I->amOnPage(Url::toRoute('/site/index.php?r=task%2Ftask&id=1'));
+        $I->see('My Application');
     }
 }

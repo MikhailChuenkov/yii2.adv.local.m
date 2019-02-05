@@ -9,7 +9,7 @@ use \yii\widgets\ActiveForm;
 use \yii\helpers\Url;
 use \yii\helpers\Html;
 
-\app\assets\TaskOneAsset::register($this);
+//\app\assets\TaskOneAsset::register($this);
 ?>
 
 <div class="task-edit">
