@@ -5,7 +5,7 @@ modules:
         #- WebDriver:
         #    url: http://front.task.local/
         #    browser: chrome
-        #    port: 1915
+        #    port: 9515
         - PhpBrowser:
                     url: http://front.task.local/
         - Yii2:

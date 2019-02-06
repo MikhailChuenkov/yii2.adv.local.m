@@ -22,9 +22,37 @@ class HomeCest
         $I->wait(2); // wait for page to be opened
     }
     */
-    public function checkOne(AcceptanceTester $I)
+    public function checkOneTaskComments(AcceptanceTester $I)
     {
-        $I->amOnPage(Url::toRoute('/site/index.php?r=task%2Ftask&id=1'));
+        $I->amOnPage(Url::toRoute('/site/index'));
         $I->see('My Application');
+        $I->seeLink('Tasks');
+        $I->click(['link' => 'Tasks']);
+        //$I->amOnPage(Url::toRoute('/site/index.php?r=task'));
+        //$I->see('Tasks');
+        $I->seeElement('.task-preview-link');
+        $I->click(['class' => 'task-preview-link']);
+        $I->seeElement('.task-edit');
+        $I->seeElement('.task-history');
+        $I->submitForm('#w2', array('TaskComments' => array(
+            'content' => 'Приступить к выполнению',
+        )));
+    }
+
+    public function checkOneTaskCreate(AcceptanceTester $I)
+    {
+        $I->amOnPage(Url::toRoute('/site/index'));
+        $I->see('My Application');
+        $I->seeLink('Tasks');
+        $I->click(['link' => 'Tasks']);
+        $I->seeLink('Create Tasks');
+        $I->click(['link' => 'Create Tasks']);
+        $I->seeElement('.tasks-create');
+        $I->submitForm('#w0', array('Tasks' => array(
+            'name' => 'Помой посуду',
+            'date' => '2019-02-15',
+            'description' => 'И про сковородку не забудь!',
+            'responsible_id' => '1',
+        )));
     }
 }

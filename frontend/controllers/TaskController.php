@@ -109,10 +109,12 @@ class TaskController extends Controller
      */
     public function actionCreate()
     {
+        /*
         if(!\Yii::$app->user->can('TaskCreate')){
             //$this->redirect('site/login');
             throw new ForbiddenHttpException();
         }
+        */
         $model = new Tasks();
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
