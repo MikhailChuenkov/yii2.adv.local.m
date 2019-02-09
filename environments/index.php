@@ -61,7 +61,7 @@ return [
             'yii',
         ],
         'setCookieValidationKey' => [
-            'common/config/params-local.php',
+            //'common/config/params-local.php',
             //'frontend/config/main-local.php',
             //'backend/config/main-local.php',
         ],

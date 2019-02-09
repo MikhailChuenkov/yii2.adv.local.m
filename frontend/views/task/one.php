@@ -76,6 +76,16 @@ use \yii\helpers\Html;
           <?php endforeach;?>
       </div>
     </div>
-
+    <form action="#" name="chat_form" id="chat_form">
+      <div>Это чат</div>
+      <label>
+        введите сообщение
+        <input type="text" name="message"/>
+        <input type="submit" task-id="<?=$model->id;?>"/>
+      </label>
+    </form>
+    <hr>
+    <div id="root_chat"></div>
+    <script src="script/client.js"></script>
   </div>
 </div>
