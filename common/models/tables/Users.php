@@ -45,7 +45,7 @@ class Users extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'username' => 'Name',
             'password' => 'Password',
         ];
     }
@@ -69,7 +69,7 @@ class Users extends \yii\db\ActiveRecord
     {
         return [
             'id',
-            'username' => 'name',
+            'username' => 'username',
             'password',
         ];
 

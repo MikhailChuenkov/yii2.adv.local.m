@@ -1,9 +1,0 @@
-{
-    "name": "geralt/test",
-    "require": {
-        "cboden/ratchet": "^0.4.1"
-    },
-    "autoload": {
-      "psr-4" : {"app\\": ""}
-    }
-}

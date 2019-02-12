@@ -3,7 +3,7 @@ namespace console\controllers;
 
 class SocketController extends \yii\console\Controller
 {
-    public function actionStartSocket($port=8080)
+    public function actionRun()
     {
         $server = \Ratchet\Server\IoServer::factory(
             new \Ratchet\Http\HttpServer(
@@ -11,7 +11,7 @@ class SocketController extends \yii\console\Controller
                     new \console\components\Chat()
                 )
             ),
-            $port
+            8080
         );
         $server->run();
     }

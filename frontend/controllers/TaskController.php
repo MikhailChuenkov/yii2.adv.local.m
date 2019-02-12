@@ -54,7 +54,7 @@ class TaskController extends Controller
             'userId' => \Yii::$app->user->id,
             'taskCommentForm' => new TaskComments(),
             'taskAttachmentForm' => new TaskAttachmentsAddForm(),
-
+            'channel' => 'Task_' . $id,
         ]);
     }
 

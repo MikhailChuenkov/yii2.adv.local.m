@@ -12,11 +12,12 @@ class m190209_192752_create_new_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('{{%chat}}', [
+        $this->createTable('chat', [
             'id' => $this->primaryKey(),
-            'id_user' => $this->integer(),
-            'id_task' => $this->integer(),
-            'message' => $this->text(),
+            'channel' => $this->string(),
+            'message' => $this->string(),
+            'user_id' => $this->integer(),
+            'created_at' => $this->dateTime()
         ]);
     }
 
@@ -25,6 +26,6 @@ class m190209_192752_create_new_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%chat}}');
+        $this->dropTable('chat');
     }
 }

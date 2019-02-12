@@ -11,7 +11,7 @@ use yii\grid\GridView;
 $this->title = 'Tasks';
 $this->params['breadcrumbs'][] = $this->title;
 */
-//\app\assets\TasksAsset::register($this);
+\frontend\assets\TaskAsset::register($this);
 ?>
 
     <p>

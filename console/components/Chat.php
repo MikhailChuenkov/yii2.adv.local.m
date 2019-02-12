@@ -3,31 +3,40 @@ namespace console\components;
 
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
+use common\models\tables\Chat as ChatTable;
 
 class Chat implements MessageComponentInterface
 {
 
-    protected $clients;
+    protected $clients = [];
 
     /**
      * Chat constructor.
      */
     public function __construct()
     {
-        $this->clients = new \SplObjectStorage();
+        //$this->clients = new \SplObjectStorage();
         echo "server started\n";
     }
 
 
     function onOpen(ConnectionInterface $conn)
     {
-        $this->clients->attach($conn);
+        /**@var ConnectionInterface $conn */
+        $queryString = $conn->httpRequest->getUri()->getQuery();
+        $channel = explode("=", $queryString)[1];
+
+        try{
+            $this->clients[$channel][$conn->resourceId] = $conn;
+        } catch (\Exception $e) {
+            $e->getMessage();
+        }
         echo "New connection : {$conn->resourceId}\n";
     }
 
     function onClose(ConnectionInterface $conn)
     {
-        $this->clients->detach($conn);
+        //$this->clients($conn);
         echo "user {$conn->resourceId} disconect!";
     }
 
@@ -35,16 +44,22 @@ class Chat implements MessageComponentInterface
     {
         echo "\nconn {$conn->resourceId} closed with error\n";
         $conn->close();
-        $this->clients->detach($conn);
+        //$this->clients->detach($conn);
     }
 
     function onMessage(ConnectionInterface $from, $msg)
     {
-        $userId = \Yii::$app->user->id;
-        var_dump($userId); //exit;
-        echo "{$userId}: {$msg}\n";
-        foreach ($this->clients as $client){
-            $client->send($msg);
+        echo "$msg";
+        $data = json_decode($msg, true);
+        $channel = $data['channel'];
+        try{
+            (new ChatTable($data))->save();
+        } catch (\Exception $e){
+        var_dump($e->getMessage());
+        }
+
+        foreach ($this->clients[$channel] as $client){
+            $client->send($data['message']);
         }
     }
 

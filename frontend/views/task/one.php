@@ -8,8 +8,9 @@
 use \yii\widgets\ActiveForm;
 use \yii\helpers\Url;
 use \yii\helpers\Html;
+use \yii\widgets\Pjax;
 
-//\app\assets\TaskOneAsset::register($this);
+\frontend\assets\TaskOneAsset::register($this);
 ?>
 
 <div class="task-edit">
@@ -61,31 +62,40 @@ use \yii\helpers\Html;
       <?php endforeach;?>
   </div>
   <div class="task-history">
+
+      <?php Pjax::begin()?>
     <div class="comments">
       <h3>Комментарии</h3>
-        <?php $form = ActiveForm::begin(['action' => Url::to(['task/add-comment'])]);?>
-        <?=$form->field($taskCommentForm, 'user_id')->hiddenInput(['value' => $userId])->label(false);?>
-        <?=$form->field($taskCommentForm, 'task_id')->hiddenInput(['value' => $model->id])->label(false);?>
-        <?=$form->field($taskCommentForm, 'content')->textInput();?>
-        <?=Html::submitButton("Добавить",['class' => 'btn btn-default']);?>
-        <?ActiveForm::end()?>
+        <form action="#" method="post">
+        <input type="hidden" name="user_id" value="<?=$userId?>"/>
+        <input type="hidden" name="task_id" value="<?=$model->id?>"/>
+        <input type="text" name="content"/>
+        <?= \yii\helpers\Html::a("Добавить", ['pjax/add-comment'], ['id'=> 'btn-refresh','class' => 'btn btn-default']);?>
       <hr>
+        </form>
       <div class="comment-history">
           <?foreach ($model->taskComments as $comment): ?>
-            <p><strong><?=$comment->user->name?></strong>: <?=$comment->content?></p>
+            <p><strong><?=$comment->user->username?></strong>: <?=$comment->content?></p>
           <?php endforeach;?>
       </div>
     </div>
+      <?php Pjax::end()?>
+
     <form action="#" name="chat_form" id="chat_form">
       <div>Это чат</div>
       <label>
+        <input type="hidden" name="channel" value="<?=$channel?>"/>
+        <input type="hidden" name="user_id" value="<?=$userId?>"/>
         введите сообщение
         <input type="text" name="message"/>
-        <input type="submit" task-id="<?=$model->id;?>"/>
+        <input type="submit" />
       </label>
     </form>
     <hr>
     <div id="root_chat"></div>
-    <script src="script/client.js"></script>
+
   </div>
 </div>
+<script>
+  var channel = '<?=$channel?>';
+</script>
