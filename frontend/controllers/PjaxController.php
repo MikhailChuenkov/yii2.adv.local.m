@@ -52,7 +52,7 @@ class PjaxController extends Controller
         ]);
     }
 
-    public function actionAddComment()
+    public function actionAddComment($id)
     {
         if(\Yii::$app->user->can('TaskNotComment')){
             throw new ForbiddenHttpException();
@@ -63,13 +63,14 @@ class PjaxController extends Controller
         }else {
             \Yii::$app->session->setFlash('error', "Не удалось добавить комментарий");
         }
-        $model = new Tasks();
-        //var_dump($model->id); exit;
         return $this->render('comment', [
-            'model' => Tasks::findOne($model->id),
+            'model' => Tasks::findOne($id),
+            'usersList' => Users::getUsersList(),
+            'statusesList' => TaskStatuses::getList(),
             'userId' => \Yii::$app->user->id,
             'taskCommentForm' => new TaskComments(),
-
+            'taskAttachmentForm' => new TaskAttachmentsAddForm(),
+            'channel' => 'Task_' . $id,
         ]);
     }
 }

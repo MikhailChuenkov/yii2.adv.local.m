@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\tables;
+namespace backend\models\tables;
 
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -32,8 +32,8 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'password'], 'required'],
-            [['username', 'password'], 'string', 'max' => 255],
+            [['username', 'password_hash'], 'required'],
+            [['username', 'password_hash'], 'string', 'max' => 255],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Tasks::className(), 'targetAttribute' => ['id' => 'responsible_id']],
         ];
     }
@@ -46,7 +46,7 @@ class Users extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'username' => 'Name',
-            'password' => 'Password',
+            'password_hash' => 'Password',
         ];
     }
 
@@ -69,8 +69,8 @@ class Users extends \yii\db\ActiveRecord
     {
         return [
             'id',
-            'username' => 'username',
-            'password',
+            'username' => 'name',
+            'password_hash',
         ];
 
     }
@@ -81,6 +81,6 @@ class Users extends \yii\db\ActiveRecord
             ->select(['id', 'username'])
             ->asArray()
             ->all();
-        return ArrayHelper::map($users, 'id', 'username');
+        return ArrayHelper::map($users, 'id', 'name');
     }
 }
