@@ -64,12 +64,14 @@ class TaskController extends Controller
             throw new ForbiddenHttpException();
         }
         $model = new TaskComments();
-        if($model->load(\Yii::$app->request->post()) && $model->save()){
-            \Yii::$app->session->setFlash('success', "Комментарий добавлен");
-        }else {
-            \Yii::$app->session->setFlash('error', "Не удалось добавить комментарий");
+        if($model->load(\Yii::$app->request->post()) && $model->save()) {
+            $id = $model->task_id;
+            return $this->render('_comment', [
+                'model' => Tasks::findOne($id),
+                'userId' => \Yii::$app->user->id,
+                'taskCommentForm' => new TaskComments(),
+            ]);
         }
-        $this->redirect(\Yii::$app->request->referrer);
 
     }
 

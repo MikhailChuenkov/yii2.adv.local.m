@@ -12,13 +12,15 @@ use \yii\widgets\Pjax;
 
 \frontend\assets\TaskOneAsset::register($this);
 ?>
-  <?php Pjax::begin()?>
-<div class="task-history">
+  <?php Pjax::begin([
+          'enablePushState' => false,
+          'id' => 'task_comments'
+  ])?>
   <div class="comments">
     <h3>Комментарии</h3>
       <?php $form = ActiveForm::begin([
           'options' => ['data' => ['pjax' => true]],
-          'action' => Url::to(['pjax/add-comment', 'id' => $model->id])
+          'action' => Url::to(['task/add-comment'])
       ]);?>
       <?=$form->field($taskCommentForm, 'user_id')->hiddenInput(['value' => $userId])->label(false);?>
       <?=$form->field($taskCommentForm, 'task_id')->hiddenInput(['value' => $model->id])->label(false);?>

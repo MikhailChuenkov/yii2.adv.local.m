@@ -63,28 +63,14 @@ use \yii\widgets\Pjax;
   </div>
   <div class="task-history">
 
-      <?php Pjax::begin()?>
     <div class="task-history">
-      <div class="comments">
-        <h3>Комментарии</h3>
-          <?php $form = ActiveForm::begin([
-                  'options' => ['data' => ['pjax' => true]],
-                  'action' => Url::to(['pjax/add-comment', 'id' => $model->id])
-          ]);?>
-          <?=$form->field($taskCommentForm, 'user_id')->hiddenInput(['value' => $userId])->label(false);?>
-          <?=$form->field($taskCommentForm, 'task_id')->hiddenInput(['value' => $model->id])->label(false);?>
-          <?=$form->field($taskCommentForm, 'content')->textInput();?>
-          <?=Html::submitButton("Добавить",['class' => 'btn btn-default']);?>
-          <?ActiveForm::end()?>
-        <hr>
-        <div class="comment-history">
-            <? foreach ($model->taskComments as $comment): ?>
-              <p><strong><?=$comment->user->username?></strong>: <?=$comment->content?></p>
-            <?php endforeach;?>
-        </div>
-      </div>
-
-      <?php Pjax::end()?>
+      <?= $this->render('_comment', [
+          'model' => $model,
+          'userId' => $userId,
+          'taskCommentForm' => $taskCommentForm,
+      ]);
+      ?>
+    </div>
 
     <form action="#" name="chat_form" id="chat_form">
       <div>Это чат</div>
