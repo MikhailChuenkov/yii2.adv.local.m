@@ -3,7 +3,9 @@
 
 namespace console\controllers;
 
+use backend\models\tables\Tasks;
 use common\models\tables\TelegramOffset;
+use common\models\tables\TelegramSubscribe;
 use SonkoDmitry\Yii\TelegramBot\Component;
 use TelegramBot\Api\Types\Message;
 use TelegramBot\Api\Types\Update;
@@ -55,6 +57,41 @@ class TelegramController extends Controller
     }
 
     private function processCommand(Message $message){
-        var_dump($message->getText());
+        $params = explode(" ", $message->getText());
+        $command = $params[0];
+        $response = "Unknown Command";
+        switch ($command){
+            case '/help':
+                $response = "Доступные команды: \n";
+                $response .= "/help - список команд \n";
+                $response .= "/project_create ##project_name## - создание команды \n";
+                $response .= "/task_create ##task_name## ##date_deadline## ##description## ##responsible_id## - создание команды \n";
+                $response .= "/sp_create - подписка на созданные проекты \n";
+                break;
+            case '/sp_create':
+                $model = new TelegramSubscribe([
+                    'chat_id' => $message->getFrom()->getId(),
+                    'channel' => TelegramSubscribe::CHANNEL_PROJECT_CREATE,
+                ]);
+                if ($model->save()) {
+                    $response = 'Вы подписаны на оповещение о создании новых проектов';
+                }else{
+                    $response = 'Ошибка';
+                }
+            case '/task_create':
+                $modelTasks = new Tasks([
+                    'name' => $params[1],
+                    'date' => $params[2],
+                    'description' => $params[3],
+                    'responsible_id' => $params[4],
+                    'created_at' => date('Y-m-d'),
+                ]);
+                if ($modelTasks->save()) {
+                    $response = "Задача {$params[1]} создана.";
+                }else{
+                    $response = 'Что-то пошло не так...';
+                }
+        }
+        $this->bot->sendMessage($message->getFrom()->getId(), $response);
     }
 }

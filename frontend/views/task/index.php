@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\filters\UsersSearch */
+/* @var $searchModel frontend\models\filters\UsersSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /*
 
