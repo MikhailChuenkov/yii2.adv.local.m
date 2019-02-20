@@ -71,9 +71,9 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' =>  \Yii::t('main', 'task_name'),
+            'name' =>  'task_name',//\Yii::t('main', 'task_name'),
             'date' => 'Date',
-            'description' => \Yii::t('main', 'task_description'),
+            'description' => 'task_description',//\Yii::t('main', 'task_description'),
             'responsible_id' => 'Responsible ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

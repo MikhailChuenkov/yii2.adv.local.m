@@ -14,7 +14,9 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
-            //'cookieValidationKey' => $params['cookieValidationKey'],
+            'parsers' => [
+                'application/json' => \yii\web\JsonParser::class
+            ]
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -41,14 +43,17 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => \yii\rest\UrlRule::class,
+                    'controller' => [
+                        'message',
+                        'taskapi'
+                    ]]
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
