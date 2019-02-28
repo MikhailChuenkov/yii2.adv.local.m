@@ -17,9 +17,42 @@
 }
 
 .task-preview {
-    width: 235px;
-    height: 120px;
+    width: 300px;
+    height: 200px;
     box-sizing: border-box;
     border: 1px solid dimgray;
     padding: 12px;
 }
+
+.task-preview-green {
+    background-color: #95f595;
+}
+
+.task-preview-blue {
+    background-color: #9ad4e4;
+}
+
+.task-preview-pink {
+    background-color: #ff5c79;
+}
+
+.task-preview-orange {
+    background-color: #ffc65f;
+}
+
+.task-preview-red {
+    background-color: #ff383f;
+}
+
+.task-preview-grey {
+    background-color: #d2d2d2;
+}
+
+.no-view {
+    display: none;
+}
+
+.view {
+    display: block;
+}
+

@@ -19,6 +19,7 @@ use yii\db\Expression;
  * @property string $created_at
  * @property string $updated_at
  * @property int $status
+ * @property string $date_end
  *
  * @property TaskAttachments[] $taskAttachments
  * @property TaskComments[] $taskComments
@@ -61,6 +62,7 @@ class Tasks extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 255],
             [['status'], 'exist', 'skipOnError' => true, 'targetClass' => TaskStatuses::className(), 'targetAttribute' => ['status' => 'id']],
             [['responsible_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['responsible_id' => 'id']],
+            [['date_end'], 'safe'],
         ];
     }
 
@@ -78,6 +80,7 @@ class Tasks extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'status' => 'Status',
+            'date_end' => 'Date end',
         ];
     }
 

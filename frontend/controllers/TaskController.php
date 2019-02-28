@@ -4,6 +4,7 @@
 namespace frontend\controllers;
 
 
+use common\models\tables\Project;
 use frontend\models\forms\TaskAttachmentsAddForm;
 //use common\models\tables\TaskAttachments;
 use common\models\tables\TaskComments;
@@ -23,10 +24,30 @@ class TaskController extends Controller
     {
         $request = \Yii::$app->request;
         $month = $request->post('date');
+        $projectId = $request->post('project');
+        $dateNow = date('Y-m-d');
+        $dateNowRequest = $request->post('dateNow');
         $model = new Tasks();
-        if($month != NULL){
+        $modelAllTasks = Tasks::find()
+            ->all();
+        if($dateNowRequest != NULL) {
+
+            foreach ($modelAllTasks as $modelAllTask) {
+                //var_dump("Задача: " . $modelAllTask->date);
+                //var_dump($dateNow);
+                $query = Tasks::find()
+                    ->where("DATEDIFF({$dateNow}, {$modelAllTask->date}) < 0");
+                //var_dump($query);
+            }
+        }else{
+            $query = Tasks::find();
+        }
+
+        //var_dump($model); exit;
+        if(($month != NULL) || ($projectId != NULL) || ($dateNowRequest != NULL)){
             $query = Tasks::find()
-                ->where(['MONTH(date)' => $month]);
+                ->where(['MONTH(date)' => $month])
+                ->orWhere(['project_id' => $projectId]);
         }else{
             $query = Tasks::find();
         }
@@ -35,10 +56,20 @@ class TaskController extends Controller
            'query' => $query,
         ]);
 
+        $queryProjects = Project::find()
+            ->all();
+
+        $queryProjectArray = [];
+        foreach ($queryProjects as $key => $queryProject){
+            $queryProjectArray[$key + 1] = $queryProject->title;
+        }
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'model' => $model,
-
+            'queryProjectArray' => $queryProjectArray,
+            'projectId' => $projectId,
+            'dateNow' => $dateNow,
         ]);
     }
 
@@ -96,6 +127,10 @@ class TaskController extends Controller
 
         if($model = Tasks::findOne($id)){
             $model->load(\Yii::$app->request->post());
+            if($model->status == 6){
+                $dateEnd = date("Y-m-d");
+                $model->date_end = $dateEnd;
+            }
             $model->save();
             \Yii::$app->session->setFlash('success', "Изменеия сохранены");
         }else {
@@ -120,7 +155,7 @@ class TaskController extends Controller
         $model = new Tasks();
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['task', 'id' => $model->id]);
         }
 
         return $this->render('create', [

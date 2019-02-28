@@ -1,7 +1,7 @@
 <?php
 
 
-namespace frontend\controllers;
+namespace frontend\modules\v1\controllers;
 
 
 use frontend\models\tables\Tasks;

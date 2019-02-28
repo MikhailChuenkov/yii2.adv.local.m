@@ -11,6 +11,11 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+        'v1' => [
+            'class' => 'frontend\modules\v1\Module',
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
@@ -49,8 +54,8 @@ return [
             'rules' => [
                 ['class' => \yii\rest\UrlRule::class,
                     'controller' => [
-                        'message',
-                        'taskapi'
+                        'v1/message',
+                        'v1/taskapi'
                     ]]
             ],
         ],
