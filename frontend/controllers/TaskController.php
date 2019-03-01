@@ -26,28 +26,19 @@ class TaskController extends Controller
         $month = $request->post('date');
         $projectId = $request->post('project');
         $dateNow = date('Y-m-d');
-        $dateNowRequest = $request->post('dateNow');
         $model = new Tasks();
-        $modelAllTasks = Tasks::find()
-            ->all();
-        if($dateNowRequest != NULL) {
 
-            foreach ($modelAllTasks as $modelAllTask) {
-                //var_dump("Задача: " . $modelAllTask->date);
-                //var_dump($dateNow);
-                $query = Tasks::find()
-                    ->where("DATEDIFF({$dateNow}, {$modelAllTask->date}) < 0");
-                //var_dump($query);
-            }
-        }else{
-            $query = Tasks::find();
-        }
+        $dateNowRequest = $request->post('dateNow');
+
 
         //var_dump($model); exit;
-        if(($month != NULL) || ($projectId != NULL) || ($dateNowRequest != NULL)){
+        if(($month != NULL) || ($projectId != NULL)){
             $query = Tasks::find()
                 ->where(['MONTH(date)' => $month])
                 ->orWhere(['project_id' => $projectId]);
+        }else if ($dateNowRequest != NULL){
+            $query = Tasks::find()
+                ->where('date < NOW()');
         }else{
             $query = Tasks::find();
         }
